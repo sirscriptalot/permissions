@@ -6,12 +6,6 @@ class User
   def initialize(permissions)
     @permissions = permissions
   end
-
-  # Authorizables must provide their own implementation of "permissions".
-  # An attr_reader would do.
-  def permissions
-    @permissions
-  end
 end
 
 class Command
