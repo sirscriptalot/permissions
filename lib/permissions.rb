@@ -1,9 +1,9 @@
 class Permissions
-  VERSION = '0.1.1'
+  VERSION = '0.1.2'
 
   module Authorizable
     def permissions
-      raise NotImplementedError
+      @permissions
     end
 
     def authorize_for?(key, *args)
@@ -13,13 +13,13 @@ class Permissions
 
   attr_reader :permissions, :default
 
-  def initialize(permissions = {}, &default)
+  def initialize(permissions = {})
     @permissions = permissions
 
     if block_given?
-      @default = default
+      @default = Proc.new
     else
-      @default = lambda { false }
+      @default = proc { false }
     end
   end
 
