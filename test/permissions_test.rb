@@ -1,8 +1,6 @@
 require_relative '../lib/permissions'
 
 class User
-  # Include the Authorizable role in any class you would
-  # to authorize to do this or that.
   include Permissions::Authorizable
 
   def initialize(permissions)
@@ -24,7 +22,7 @@ class Command
   end
 
   # Not provided by the library. An advanced example
-  # on how to test things like: "Does an object
+  # on how to authorize things like: "Does an object
   # belong to a particular user?"
   def authorize?(other)
     other.authorize_for?(self.class, self)
@@ -71,7 +69,7 @@ guest_permissions = Permissions.new
 # Create permissions, guests are allowed to execute Create.
 guest_permissions.for(Create) { true }
 
-# Guests cannot Dpdate or Delete, this is also the default permission.
+# Guests cannot Update or Delete, this is also the default permission.
 guest_permissions.for(Update, Delete) { false }
 
 # As a convenience, deep_dup lets you copy existing permissions.
