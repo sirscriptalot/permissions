@@ -1,5 +1,5 @@
 class Permissions
-  VERSION = '0.1.2'
+  VERSION = '0.1.3'
 
   module Authorizable
     def permissions
@@ -32,6 +32,6 @@ class Permissions
   end
 
   def deep_dup(initial_permissions = {})
-    Permissions.new(initial_permissions.merge(permissions)) { default }
+    self.class.new(initial_permissions.merge(permissions)) { default }
   end
 end
