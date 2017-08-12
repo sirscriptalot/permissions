@@ -41,13 +41,6 @@ class Command
   def initialize(user)
     @user = user
   end
-
-  # Not provided by the library. An advanced example
-  # on how to authorize things like: "Does an object
-  # belong to a particular user?"
-  def authorize?(other)
-    other.authorize_for?(self.class, self)
-  end
 end
 
 permissions = Permissions.new
@@ -56,9 +49,15 @@ permissions.for(Command) { |user, command| user == command.user }
 
 user = User.new(permissions)
 
-command = Command.new(user)
+foo = Command.new(user)
 
-command.authorize?(user) # true
+bar = Command.new(nil)
+
+user.authorize_for?(Command, foo) # true
+
+user.authorize_for?(Command, bar) # false
+
+permissions.authorize?(Command, user, foo) # true
+
+permissions.authorize?(Command, user, bar) # false
 ```
-
-More examples can be found in the tests.
